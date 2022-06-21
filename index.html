@@ -26,7 +26,7 @@ const getType = document.querySelector('.type');
 const input = document.querySelector('.input'); 
 const weatherIcon = document.querySelector('.weatherIcon');    
 function getCityWether(city){
-    const requestURL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=10ff4b76fe680fe314a3e3f9309038e8`;
+    const requestURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=10ff4b76fe680fe314a3e3f9309038e8`;
         const request = new XMLHttpRequest();
         request.open('GET', requestURL);
         request.responseType = 'json';
