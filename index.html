@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Weather</title>
+</head>
+<body>
+
+    <div class="main_wrap">
+        <div class="widgets_box">
+             <input class="input" type="text" placeholder="Город">
+             <p class="city"></p>
+             <p><span class="temp"></span><span>&#xb0</span></p>
+             <p class="type"></p>
+             <img class="weatherIcon" src="" alt="icon">
+        </div> 
+    </div>
+    <script>
+
+const getCity = document.querySelector('.city');  
+const getTemp = document.querySelector('.temp'); 
+const getType = document.querySelector('.type'); 
+const input = document.querySelector('.input'); 
+const weatherIcon = document.querySelector('.weatherIcon');    
+function getCityWether(city){
+    const requestURL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=10ff4b76fe680fe314a3e3f9309038e8`;
+        const request = new XMLHttpRequest();
+        request.open('GET', requestURL);
+        request.responseType = 'json';
+        request.send();
+
+        request.onload = function() {
+            const data = request.response;
+            console.log(data);
+            const weatherType = data.weather[0].main;
+            const weatherCity = data.name;
+            let weatherTemp = data.main.temp;
+            weatherTemp -= 273,15;
+            weatherTemp = Math.round(weatherTemp);
+            getCity.innerText = weatherCity;
+            getTemp.innerText = weatherTemp;
+            getType.innerText = weatherType;
+            if(weatherType == 'Clear'){
+                weatherIcon.setAttribute('src', 'img/clear.png')
+            }
+            if(weatherType == 'Clouds'){
+                weatherIcon.setAttribute('src', 'img/clouds.png')
+            }
+            if(weatherType == 'Rain'){
+                weatherIcon.setAttribute('src', 'img/rain.png')
+            }
+            if(weatherType == 'Snow'){
+                weatherIcon.setAttribute('src', 'img/snow.png')
+            }
+        }
+}
+
+input.addEventListener('keyup',function(){
+    input.value;
+    getCityWether(input.value);
+});
+
+getCityWether('kiev');
+
+    </script>
+</body>
+</html>
+
